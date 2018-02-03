@@ -26,6 +26,18 @@ p a {
 p a:hover {
 	color:black;
 }
+.notify {
+	margin-top:-75px;
+	animation-name: expand;
+	animation-duration: 1s;
+	animation-fill-mode:forwards;
+	-webkit-animation-fill-mode:forwards;
+	height:75px;
+	line-height:60px;
+	background-color:white;
+	text-align:center;
+	padding:5px;
+}
 .information_box {
 	color:black;
 	margin-top:-10vh;
@@ -92,6 +104,7 @@ p a:hover {
     border-radius:500px;
 }
 .logo {
+    text-align:center;
     font-family: Garamond;
     animation-name: load;
     animation-duration: 1s;
@@ -100,11 +113,8 @@ p a:hover {
     font-size: 25px;
     font-weight: 500;
     z-index:99;
-    left: 36px;
-    right: 0;
-    margin: 0 auto;
     margin-top: 8px;
-    width:300px;
+    width:100%;
 }
 .footer {
     background-color: black;/*#2d0e44;*/
@@ -229,4 +239,8 @@ to {background-color:#2d0e44} /*hite; #2d0e44;*/
 @keyframes bubble {
 0% {margin-top:-500px;}
 100% {opacity:1;margin-top:1000px;}
+}
+@keyframes expand {
+0% {margin-top:-75px;}
+100% {margin-top:0px;}
 }

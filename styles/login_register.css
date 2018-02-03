@@ -36,7 +36,13 @@ span {
 	font-size:12px;
 }
 .warning {
-	height:25px;
+	animation-name: expand;
+	animation-duration: 1s;
+	animation-fill-mode:forwards;
+	-webkit-animation-fill-mode:forwards;
+	line-height:60px;
+	margin-top:-75px;
+	height:75px;
 	background-color:white;
 	text-align:center;
 }
@@ -97,7 +103,7 @@ span {
     width:500px;
 }
 
-input[type=text], select, input[type=password] {
+input[type=text], select, input[type=email], input[type=password] {
     width: 80%;
     padding: 12px 20px;
     margin-top:-4px;
@@ -107,7 +113,7 @@ input[type=text], select, input[type=password] {
     border-radius: 300px;
 }
 
-.reg input[type=text], .reg input[type=password], select {
+.reg input[type=text], .reg input[type=password], .reg input[type=email], select {
     color:white;
     background-color:#2d0e44;
 }
@@ -158,18 +164,26 @@ input[type=submit]:hover, #c_submit:hover {
 .unselect {
     transition:all 0.4s ease;
     cursor:pointer;
-    color:white;
+    color:#2d0e44;
 }
 .select {
     transition:all 0.4s ease;
     cursor:default;
-    color:#2d0e44;
+    color:white;
 }
 
 
 #register {
     position:absolute;
     right:0;
+}
+
+::selection {
+    background:#2d0e44;
+}
+
+::-moz-selection {
+    background:#2d0e44;
 }
 
 @media all and (max-width: 760px){
@@ -196,4 +210,9 @@ input[type=submit]:hover, #c_submit:hover {
     font-family: "Franklin Gothic Bold";
     src: url("./fonts/FRAHV.TTF");
     url("./fonts/FRAHV.TTF")format("ttf");
+}
+
+@keyframes expand {
+0% {margin-top:-75px;}
+100% {margin-top:0px;}
 }

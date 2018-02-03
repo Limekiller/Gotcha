@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 							if(password_verify($password, $hashed_password)){
 								session_start();
 								$_SESSION['lusername'] = $username;
-								header("location: ./index.php");	
+								header("location: /");	
 							} else {
 								$lpassword_err = "That password ain't right!";
 							}
@@ -125,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$param_description = $description;
 	
 				if(mysqli_stmt_execute($stmt)){
-					header('Location: ./index.php');
+					header('Location: /?user=true');
 				}
 			}
 			mysqli_stmt_close($stmt);
@@ -187,16 +187,16 @@ if ($_SESSION['try_count'] > 5){
         <div class='reg'>
 
 	<form id="reg" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method='post'>
+		<div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                <label style="right:39%;" for="email">Email</label>
+		<input type="email" id="email" name="email" placeholder="Email"value="<?php echo $email; ?>">
+		<span class="help-block"><?php echo $email_err;?></span>
+		</div>
+
 		<div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label for="uname">Username</label>
 		<input type="text" id="username" name="username" placeholder="Username"value="<?php echo $username; ?>">
 		<span class="help-block"><?php echo $username_err;?></span>
-		</div>
-
-		<div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
-                <label style="right:39%;" for="email">Email</label>
-		<input type="text" id="email" name="email" placeholder="Email"value="<?php echo $username; ?>">
-		<span class="help-block"><?php echo $email_err;?></span>
 		</div>
 
 		<div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ""; ?>">

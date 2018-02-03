@@ -12,7 +12,7 @@ body {
 p a {
 	text-decoration:none;
 	color:white;
-	padding-right:10px;
+	padding-right:20px;
 	transition: all 0.4s ease;
 }
 p a:hover {
@@ -32,7 +32,7 @@ p a:hover {
 	color:white;
 	font-family: Franklin Gothic Medium;
 	margin: auto;
-	margin-top:70px;
+	margin-top:25px;
 	border-radius:5px;
 	background-color:#2d0e44;
 }
@@ -85,9 +85,20 @@ p a:hover {
 	color:black;
 }
 
+::selection {
+    background:#2d0e44;
+}
+
+::-moz-selection {
+    background:#2d0e44;
+}
+
 @media all and (max-width: 760px){
 	.spy {
 		width:100%;
+	}
+	.footer {
+		font-size:13px;
 	}
 }
 

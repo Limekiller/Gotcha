@@ -46,7 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 						$p_comments = $comments;
 
 						if(mysqli_stmt_execute($stmt)){
-							header('Location: ./index.php');
+							header('Location: /?submit=true');
 						}	
 					}
 				}
@@ -54,6 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		}
 	}
 }
+mysqli_close($link);
 ?>
 
 <!DOCTYPE html>
@@ -69,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <body>
 <div class="page_wrapper">
 <div class="header">SUBMIT FORM</div>
-<div class="bg"></div>
+<div style="height:225px;"></div>
 <div class="content">
 		<form id="report" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                 <label for="form_type">Report Type</label><br>
@@ -82,7 +83,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		</div>
 
 		<label for="users">Person</label><br>
-		<input autocomplete="off" name="target" style="margin-bottom:35px;margin-top:5px;width:50%;" list="users">
+		<input autocomplete="off" name="target" style="margin-bottom:35px;margin-top:5px;" list="users">
+		<p style="font-size:12px;margin-top:-35px;"><?php echo $person_err;?></p>
 		<datalist name="users" id="users" >
 			<?php
 			require './config.php';
@@ -101,14 +103,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			?>
 			</datalist><br>
 		<label for="report">Comments</label><br>
-		<textarea name="comments" style="margin-bottom:35px;margin-top:5px;width:50%;font-family:Franklin Gothic Medium;"form="report" placeholder="Show me the deets"></textarea><br>
+		<textarea name="comments" style="margin-bottom:35px;margin-top:5px;font-family:Franklin Gothic Medium;"form="report" placeholder="Show me the deets"></textarea><br>
 
                 <input type="submit" name="submit_btn" value="Submit">
             	</form>
 	</div>
 </div>
 <div class="footer">
-<p style="display:inline;float:left;margin:13px;"><a href="/">Home</a>Created by Bryce Yoder, 2017</p>
+<p style="display:inline;float:left;margin:13px;"><a href="/">Home</a>Created by Bryce Yoder, 2018</p>
 <a href='./logout.php' class='logout' style='float:right;display:<?php if($login == true){echo 'inline';}else{echo 'none';}?>'>Logout</a>
 </div>
 </body>

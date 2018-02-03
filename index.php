@@ -5,7 +5,7 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	$display1 = 'none';
 	$display2 = 'inherit';
 	require_once './config.php';
-	$sql = "SELECT target FROM users WHERE username = '".$_SESSION['lusername']."'";
+	$sql = "SELECT target, admin FROM users WHERE username = '".$_SESSION['lusername']."'";
 	$result = $link->query($sql);
 	$row = mysqli_fetch_array($result);
 	if ($row["target"] == Null){
@@ -13,11 +13,34 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	} elseif ($row["target"] == "killed"){
 		$info_box = "killed";
 	} else { $info_box = $row["target"]; }
+	if ($row["admin"] == 1){
+		$admin = 'inherit';
+	} else {$admin = 'none';}
+	$sql = "select * from users where target is not NULL and target != 'killed';"; 
+	$result = $link->query($sql);
+	$row = mysqli_fetch_array($result);
+	if ($result->num_rows == 1){
+		$winner = $row['username'];
+		$info_box = "win";
+	}
 } else{
 	$login = false;
+	$admin = 'none';
 	$display1 = 'inherit';
 	$display2 = 'none';
 	$info_box = Null;
+}
+$submit = "none;";
+if (isset($_GET['submit'])){
+	if ($_GET['submit']){
+		$submit = "inherit;";
+	} 
+}
+$user = "none;";
+if (isset($_GET['user'])){
+	if ($_GET['user']){
+		$user = "inherit;";
+	}
 }
 ?>
 
@@ -31,7 +54,9 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 <head>
   <title>Goshen Gotcha</title>
 </head>
-<body >
+<body <?php if($login == true){echo 'style="animation-name:blarg;background-color:#2d0e44"';}?>>
+    <div style=<?php echo "'display:".$submit."'" ?>; class="notify">Report submitted successfully!</div>
+    <div style=<?php echo "'display:".$user."'" ?>; class="notify">Account created successfully! Please log in.</div>
     <div class='header'>
         <p class='logo'>GOSHEN COLLEGE</p>
     </div>
@@ -61,7 +86,14 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 		<?php
 		if ($info_box == "killed"){
 			echo "You have been killed!";
-		} else {
+		} elseif ($info_box == "win"){
+			if ($winner == $_SESSION['lusername']){
+				echo "You have won the game!";
+			} else {
+				echo $winner." has won the game!";
+			}
+		}	
+		else {
 			echo "Your target is ".$info_box;
 		}
 		?>
@@ -70,22 +102,28 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
             <p style='z-index:2;position:relative;'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
         <div class='buttons'>
+            <a href='./admin.php' class='button' style='float:left;display:<?php echo $admin;?>;'>
+                <img class='button_image'src='./images/gear.svg'>
+                <div class='button_text'>
+                    Admin Panel
+                </div>
+            </a>
             <a href='./login_register.php' class='button' style='float:left;display:<?php echo $display1;?>;'>
                 <img class='button_image'src='./images/log_reg.svg'>
                 <div class='button_text'>
                     Login/Register
                 </div>
             </a>
-	    <?php if($info_box == "killed"){echo '<div style="cursor:default;background-color:#363636;';}else{echo "<a href='./submit_form.php' style=";}?>float:left;display:<?php echo $display2;?>;" class='button'>
+	    <?php if($info_box == "killed"){echo '<div style="cursor:default;background-color:#363636;';}else{echo "<a href='./submit_form.php' style=";}?>float:left;display:<?php if($admin=="inherit"){echo "none;";}else{echo $display2;}?>;" class='button'>
                 <img class='button_image'src='./images/form.svg'>
                 <div class='button_text'>
                     Submit Report
                 </div>
 	    <?php if($info_box == "killed"){echo "</div>";}else{echo "</a>";}?>
             <a href='./view_spies.php' class='button' >
-                <img class='button_image'src='./images/assassin.svg'>
+                <img class='button_image'src='./images/mask.svg'>
                 <div class='button_text'>
-                    View Assassins
+                    View Spies
                 </div>
             </a>
             <a href='./rules.php' class='button' style='float:right;'>
@@ -97,7 +135,7 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
         </div>
     </div>
     <div class='footer'>
-	<p style="display:inline;float:left;margin:13px;">Created by Bryce Yoder, 2017</p>
+	<p style="display:inline;float:left;margin:13px;">Created by Bryce Yoder, 2018</p>
 	<a href='./logout.php' class='logout' style='float:right;display:<?php if($login == true){echo 'inline';}else{echo 'none';}?>'>Logout</a>
     </div>
 </body>

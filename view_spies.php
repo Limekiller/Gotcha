@@ -21,10 +21,11 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 <body>
 <div class="wrapper">
 <div class="header">VIEW SPIES</div>
+<div style="height:150px;"></div>
 <?php
 require './config.php';
 
-$sql = "SELECT username, description, target FROM users";
+$sql = "SELECT username, description, target FROM users where admin != 1 or admin is NULL;";
 $result = $link->query($sql);
 
 if ($result->num_rows > 0) {
@@ -34,15 +35,15 @@ if ($result->num_rows > 0) {
 		} else { $color = "background-color:#2d0e44;";}
 		echo'<div class="spy" style="'.$color.'"><h1>'.$row["username"].'</h1><p>'.$row["description"].'</p></div>';
 	}
+	echo '<div style="height:150px;"></div>';
 } else {
-	echo "0 results";
+	echo "<h2 style='font-family:Franklin Gothic Medium;text-align:center;color:white;'>There's nothing here!</h2>";
 }
 $link->close();
 ?>
-<div style="position:absolute;height:100vh;width:100%;top:0;"></div>
 </div>
 <div class="footer">
-	<p style="display:inline;float:left;margin:13px;"><a href="/">Home</a>Created by Bryce Yoder, 2017</p>
+	<p style="display:inline;float:left;margin:13px;"><a href="/">Home</a>Created by Bryce Yoder, 2018</p>
 	<a href='./logout.php' class='logout' style='float:right;display:<?php if($login == true){echo 'inline';}else{echo 'none';}?>'>Logout</a>
 </div>
 </body>
