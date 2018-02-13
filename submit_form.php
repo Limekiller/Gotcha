@@ -78,7 +78,10 @@ mysqli_close($link);
 <div style="height:13vw;"></div>
 <div class="content">
 		<form id="report" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-                <label for="form_type">Report Type</label><br>
+                <label for="form_type">
+			<h2>Report Type</h2>
+		</label>
+		<div class="option">
 		<div class="selectbox">
 			<select name="report_type">
 				<option value="kill">I got somebody, heck yeah</option>
@@ -86,10 +89,14 @@ mysqli_close($link);
 				<option value="dispute">Somebody tried to get me and might submit a report but they're wrong lol</option>
 			</select>
 		</div>
+		</div>
 
-		<label for="users">Person</label><br>
-		<input autocomplete="off" name="target" style="margin-bottom:35px;margin-top:5px;" list="users">
-		<p style="font-size:12px;margin-top:-35px;"><?php echo $person_err;?></p>
+		<label for="users">
+			<h2>Person</h2>
+		</label>
+		<div class="option">
+		<input autocomplete="off" name="target" style="margin-bottom:5px;margin-top:5px;" list="users">
+		<p style="font-size:12px;"><?php echo $person_err;?></p>
 		<datalist name="users" id="users" >
 			<?php
 			require './config.php';
@@ -108,12 +115,19 @@ mysqli_close($link);
 			$link->close();
 			?>
 			</datalist><br>
-		<label for="report">Comments</label><br>
+		</div>
+
+		<label for="report">
+			<h2>Comments</h2>
+		</label>
+		<div class="option">
 		<textarea name="comments" style="margin-bottom:35px;margin-top:5px;font-family:Franklin Gothic Medium;"form="report" placeholder="Show me the deets"></textarea><br>
 
                 <input type="submit" name="submit_btn" value="Submit">
+		</div>
             	</form>
 	</div>
+	<div style="height:50px;"></div>
 </div>
 <div class="footer">
 <p style="display:inline;float:left;margin:13px;"><a href="/">Home</a>Created by Bryce Yoder, 2018</p>
