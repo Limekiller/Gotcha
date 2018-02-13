@@ -1,4 +1,5 @@
 <?php
+// Kind of pointless script to make a db connection
 
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');

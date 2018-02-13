@@ -190,6 +190,9 @@ input[type=submit]:hover, #c_submit:hover {
     .logreg {
         width:100%;
     }
+    .desc_box {
+	width:100%;	
+    }
     .blocker_text_container {
         width:100%;
     }

@@ -1,4 +1,5 @@
 <?php
+// Determines if user is logged in, if user has a target, if user was killed, if user is admin. This determines if the info box shows and what the first menu option is for them.
 session_start();
 if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	$login = true;
@@ -23,13 +24,20 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 		$winner = $row['username'];
 		$info_box = "win";
 	}
+	$sql = "show tables like 'game_running'";
+	$result = $link->query($sql);
+	if ($result->num_rows == 1){
+		$game_started = true;
+	} else {$game_started = false;}
 } else{
 	$login = false;
 	$admin = 'none';
+	$game_started = false;
 	$display1 = 'inherit';
 	$display2 = 'none';
 	$info_box = Null;
 }
+// Displays notification messages
 $submit = "none;";
 if (isset($_GET['submit'])){
 	if ($_GET['submit']){
@@ -114,12 +122,12 @@ if (isset($_GET['user'])){
                     Login/Register
                 </div>
             </a>
-	    <?php if($info_box == "killed"){echo '<div style="cursor:default;background-color:#363636;';}else{echo "<a href='./submit_form.php' style=";}?>float:left;display:<?php if($admin=="inherit"){echo "none;";}else{echo $display2;}?>;" class='button'>
+	    <?php if($info_box == "killed" or $game_started == false){echo '<div style="cursor:default;background-color:#363636;';}else{echo "<a href='./submit_form.php' style=";}?>float:left;display:<?php if($admin=="inherit"){echo "none;";}else{echo $display2;}?>;" class='button'>
                 <img class='button_image'src='./images/form.svg'>
                 <div class='button_text'>
                     Submit Report
                 </div>
-	    <?php if($info_box == "killed"){echo "</div>";}else{echo "</a>";}?>
+	    <?php if($info_box == "killed" or $game_started == false){echo "</div>";}else{echo "</a>";}?>
             <a href='./view_spies.php' class='button' >
                 <img class='button_image'src='./images/mask.svg'>
                 <div class='button_text'>

@@ -8,9 +8,14 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	if ($row["target"] == "killed"){
 	header("Location: /");
 	} else {
+	$result = $link->query("show tables like 'game_running';");
+	if($result->num_rows == 0){
+		header("Location: /");
+	} else {	
 	$login = true;
 	$display1 = 'none';
 	$display2 = 'inherit';
+	}
 	}
 } else{
 	header("Location: /");
@@ -70,7 +75,7 @@ mysqli_close($link);
 <body>
 <div class="page_wrapper">
 <div class="header">SUBMIT FORM</div>
-<div style="height:225px;"></div>
+<div style="height:13vw;"></div>
 <div class="content">
 		<form id="report" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                 <label for="form_type">Report Type</label><br>

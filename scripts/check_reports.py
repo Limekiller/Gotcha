@@ -43,8 +43,8 @@ for i in results:
 for i in kill:
     if (i[1], i[0]) in killed:
         verified_kills.append(i)
-        cursor.execute("delete from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"';")
-        cursor.execute("delete from reports where filed_by = '"+i[1]+"' and against = '"+i[0]+"';")
+        cursor.execute("delete from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'kill';")
+        cursor.execute("delete from reports where filed_by = '"+i[1]+"' and against = '"+i[0]+"' and type = 'killed';")
     else:
         cursor.execute("select * from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'kill' and time < date_sub(now(), interval 24 hour);")
         results = cursor.fetchall()
