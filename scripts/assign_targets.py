@@ -10,7 +10,7 @@ results = cursor.fetchall()
 users_left = []
 for i in results:
     if i[7] != 1:
-        users_left.append(i[1])
+        users_left.append(i[0])
 random.shuffle(users_left)
 
 # Go through list and set each person's target to be the next person in the list
