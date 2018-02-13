@@ -94,7 +94,8 @@ mysqli_close($link);
 			<?php
 			require './config.php';
 			
-			$sql = "SELECT username, description FROM users";
+			$sql = "SELECT username, description FROM users where username != '".$_SESSION["lusername"]."' and 
+			target is not NULL and target != 'killed';";
 			$result = $link->query($sql);
 			
 			if ($result->num_rows > 0) {
