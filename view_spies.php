@@ -23,7 +23,7 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 <div class="header">VIEW SPIES</div>
 <div style="height:150px;"></div>
 <?php
-require './config.php';
+require '../config.php';
 
 $sql = "SELECT username, description, target FROM users where admin != 1 or admin is NULL;";
 $result = $link->query($sql);

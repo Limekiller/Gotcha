@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once './config.php';
+require_once '../config.php';
 if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	$sql = "SELECT target FROM users WHERE username = '".$_SESSION['lusername']."';";
 	$result = $link->query($sql);
@@ -98,7 +98,7 @@ mysqli_close($link);
 		<p style="font-size:12px;"><?php echo $person_err;?></p>
 		<datalist name="users" id="users" >
 			<?php
-			require './config.php';
+			require '../config.php';
 			
 			$sql = "SELECT username, description FROM users where username != '".$_SESSION["lusername"]."' and 
 			target is not NULL and target != 'killed';";

@@ -3,14 +3,14 @@ import random
 
 db = pymysql.connect(user="root", passwd="codepurple", db="gotcha", unix_socket="/run/mysqld/mysqld.sock", autocommit=True)
 cursor = db.cursor()
-cursor.execute("select * from users where target is NULL and admin is NULL;")
+cursor.execute("select * from users where target is NULL and admin = 0;")
 results = cursor.fetchall()
 
 # Create user list and shuffle it (basically we're creating a linked list)
 users_left = []
 for i in results:
     if i[7] != 1:
-        users_left.append(i[0])
+        users_left.append(i[2])
 random.shuffle(users_left)
 
 # Go through list and set each person's target to be the next person in the list

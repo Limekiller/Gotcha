@@ -5,7 +5,7 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	$login = true;
 	$display1 = 'none';
 	$display2 = 'inherit';
-	require_once './config.php';
+	require_once '../config.php';
 	$sql = "SELECT target, admin FROM users WHERE username = '".$_SESSION['lusername']."'";
 	$result = $link->query($sql);
 	$row = mysqli_fetch_array($result);

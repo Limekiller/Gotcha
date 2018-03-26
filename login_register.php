@@ -16,7 +16,7 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	header('location: ./index.php');
 }
 
-require_once './config.php';
+require_once '../config.php';
 
 $username = $password = $confirm_password = $email = $description = "";
 $username_err = $password_err = $confirm_password_err = $email_err = "";
@@ -114,19 +114,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$description = trim($_POST["description"]);
 	
 		if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err)){
+				
+			$stmt = $link->prepare("INSERT INTO users (username, email, password, description) VALUES (?, ?, ?, ?)");
+			$stmt->bind_param("ssss", $param_username, $param_email, $param_password, $param_description);
 	
-			$sql = "INSERT INTO users (username, email, password, description) VALUES (?, ?, ?, ?)";
-			if($stmt = mysqli_prepare($link, $sql)){
-				mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_email,  $param_password, $param_description);
+			$param_username = $username;
+			$param_email = $email;
+			$param_password = password_hash($password, PASSWORD_DEFAULT);
+			$param_description = $description;
+			error_log($param_username.$param_email.$param_password.$param_description);
 	
-				$param_username = $username;
-				$param_email = $email;
-				$param_password = password_hash($password, PASSWORD_DEFAULT);
-				$param_description = $description;
-	
-				if(mysqli_stmt_execute($stmt)){
-					header('Location: /?user=true');
-				}
+			if($stmt->execute()){
+				$stmt->close();
+				$link->close();
+				error_log('got here fuck this shit ');
+				header('Location: /?user=true');
 			}
 			mysqli_stmt_close($stmt);
 		} else {

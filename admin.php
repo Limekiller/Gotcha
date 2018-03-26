@@ -1,7 +1,7 @@
 <?php
 // Determine if user is logged in and admin. If not, send back to the homepage! Get outta here!
 session_start();
-$link = new mysqli('localhost', 'root', 'codepurple', 'gotcha');
+require_once '../config.php';
 if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	$login = true;
 	$display1 = 'none';
@@ -18,7 +18,7 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 $person = $person_err = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	if ($_POST['submit_btn'] == "Send Email"){
-		exec("python ./scripts/mass_email.py '".trim($_POST["body"])."'");
+		exec("python ../mass_email.py '".trim($_POST["body"])."'");
 	} else {
 	if(empty(trim($_POST["target"]))){
 		$person_err = "You have to enter in a name, ".$_SESSION["lusername"];
@@ -28,9 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 		if($result->num_rows == 0){
 			$person_err = "That user doesn't exist, fella!";
 		}else{
-			$result = $link->query("select * from users where username = '".$person."' and admin is NULL;");
+			$result = $link->query("select * from users where username = '".$person."' and admin = 0;");
 			if($result->num_rows == 0){
-				$link->query("update users set admin = NULL where username = '".$person."';");
+				$link->query("update users set admin = 0 where username = '".$person."';");
 	 			header("Location: /");
 			} else{
 				$link->query("update users set admin = 1 where username = '".$person."';");
@@ -45,14 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 if (isset($_GET['start_game'])){
 	if ($_GET['start_game']){
 		$link->query("create table game_running (time_set DATETIME);");
-		exec("python ./scripts/assign_targets.py 2>&1", $output);
+		exec("python ../assign_targets.py 2>&1", $output);
 		header('Location: ./admin.php');
 	}
 // Runs the reset game Python script
 }elseif (isset($_GET['reset_game'])){
 	if ($_GET['reset_game']){
 		$link->query("drop table game_running;");
-		$sql = "delete from users where admin is NULL;";
+		$sql = "delete from users where admin = 0;";
 		$link->query($sql);
 		$sql = "delete from reports;";
 		$link->query($sql);
@@ -101,7 +101,7 @@ $link->close();
 		<input autocomplete="off" name="target" style="margin-bottom:10px;margin-top:5px;" list="users">
 		<datalist name="users" id="users" >
 			<?php
-			require './config.php';
+			require '../config.php';
 			
 			$sql = "SELECT username, description FROM users";
 			$result = $link->query($sql);
@@ -124,8 +124,8 @@ $link->close();
 		<label><h2 >Submitted reports</h2></div>
 		<div class="option">
 		<?php
-		$link = new mysqli("localhost", "root", "codepurple", "gotcha");
-		$result = $link->query("select * from reports order by time desc;");		
+		require '../config.php';
+		$result = $link->query("select * from reports order by time desc");		
 		if ($result->num_rows > 0) {
 			while($row = $result->fetch_assoc()) {
 				if($row["type"] == "kill"){
