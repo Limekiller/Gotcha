@@ -107,7 +107,8 @@ if (isset($_GET['user'])){
 		?>
 		</p></div>
             <h1 style='z-index:2;margin-top:25vh;position:relative;margin-left:-20px;font-family:Franklin Gothic Bold;'>Gotcha!</h1>
-            <p style='z-index:2;position:relative;'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p style='z-index:2;position:relative;'>
+The goal of Gotcha is to remain in the game until all other players have gotten out or you have been gotten out. To do so, you will be assigned a target. If you succeed in getting your target out, you both must submit a report (choose "Submit a Report" from the main menu), and you will then receive your next target. If there is a disagreement, or if someone tried and failed to get you out -- but you believe they may submit a report claiming they got you -- disputes can be submitted as well.</p>
         </div>
         <div class='buttons'>
             <a href='./admin.php' class='button' style='float:left;display:<?php echo $admin;?>;'>

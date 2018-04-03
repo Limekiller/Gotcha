@@ -1,16 +1,6 @@
 <?php
 $show = 'none';
 session_start();
-if (empty($_SESSION['try_count'])) {
-	$_SESSION['try_count'] = 1;
-	$_SESSION['start_time'] = time();
-} else {
-	if (time() - $_SESSION['start_time'] > 60){
-		$_SESSION['try_count'] = 0;
-	} else {
-		$_SESSION['try_count']++;
-	}
-}
 
 if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	header('location: ./index.php');
@@ -138,9 +128,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	}
 }
 
-if ($_SESSION['try_count'] > 5){
-	$username_err = 'What, do you like suck at creating users or something?';
-}
 ?>
 
 
@@ -174,7 +161,7 @@ if ($_SESSION['try_count'] > 5){
         <div class="log">
 
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-                <label for="uname">Username</label>
+                <label for="uname">Agent Name</label>
                 <input type="text" id="uname" name="lusername" placeholder="Username">
 		<span><?php echo $lusername_err;?></span>
 
@@ -196,7 +183,7 @@ if ($_SESSION['try_count'] > 5){
 		</div>
 
 		<div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label for="uname">Username</label>
+                <label for="uname">Agent Name</label>
 		<input type="text" id="username" name="username" placeholder="Username"value="<?php echo $username; ?>">
 		<span class="help-block"><?php echo $username_err;?></span>
 		</div>

@@ -21,6 +21,7 @@ form {
     right:0;
     width:75%;
     transform: translateY(-191px);
+    -webkit-transform: translateY(-191px);
 }
 label {
     position: relative;
@@ -59,6 +60,7 @@ span {
 	position:absolute;
 	z-index:100;
 	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
 }
 
 .log {
@@ -128,6 +130,7 @@ textarea {
 	top:38%;
 	resize:none;
 	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
 }
     
 input[type=submit], #c_submit {
