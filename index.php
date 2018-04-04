@@ -9,11 +9,14 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	$sql = "SELECT target, admin FROM users WHERE username = '".$_SESSION['lusername']."'";
 	$result = $link->query($sql);
 	$row = mysqli_fetch_array($result);
+	$sql2 = "SELECT email FROM users WHERE username = '".$row['target']."'";
+	$result2 = $link->query($sql2);
+	$row2 = mysqli_fetch_array($result2);
 	if ($row["target"] == Null){
 		$info_box = Null;
 	} elseif ($row["target"] == "killed"){
 		$info_box = "killed";
-	} else { $info_box = $row["target"]; }
+	} else { $info_box = $row2["email"]; }
 	if ($row["admin"] == 1){
 		$admin = 'inherit';
 	} else {$admin = 'none';}

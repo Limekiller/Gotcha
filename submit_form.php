@@ -120,7 +120,7 @@ mysqli_close($link);
 			<h2>Comments</h2>
 		</label>
 		<div class="option">
-		<textarea name="comments" style="margin-bottom:35px;margin-top:5px;font-family:Franklin Gothic Medium;"form="report" placeholder="Show me the deets"></textarea><br>
+		<textarea name="comments" style="margin-bottom:35px;margin-top:5px;font-family:Franklin Gothic Medium;"form="report" placeholder="Describe the attack: time and place..."></textarea><br>
 
                 <input type="submit" name="submit_btn" value="Submit">
 		</div>

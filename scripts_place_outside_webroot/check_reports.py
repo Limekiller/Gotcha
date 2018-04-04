@@ -46,7 +46,7 @@ for i in kill:
         cursor.execute("delete from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'kill';")
         cursor.execute("delete from reports where filed_by = '"+i[1]+"' and against = '"+i[0]+"' and type = 'killed';")
     else:
-        cursor.execute("select * from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'kill' and time < date_sub(now(), interval 24 hour);")
+        cursor.execute("select * from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'kill' and time < date_sub(now(), interval 3 hour);")
         results = cursor.fetchall()
         if results:
             conflict = True
@@ -58,7 +58,7 @@ msg+="Please check the admin panel for more information"
 # For everybody in verified list, check if the killer actually had the victim as their target, and if so, give the killer the victim's target;
 # If not, (e.g., a self defense kill) make the killer the target of the person who was killed
 for i in verified_kills:
-    cursor.execute("select * from users where username = '"+i[0]+"' and target = '"+i[1]+"';")
+    cursor.execute("select * from users where username  = '"+i[0]+"' and target = '"+i[1]+"';")
     results = cursor.fetchall()
     if results:
         cursor.execute('select target from users where username = "'+i[1]+'";')
