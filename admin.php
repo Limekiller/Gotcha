@@ -18,7 +18,7 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 $person = $person_err = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	if ($_POST['submit_btn'] == "Send Email"){
-		exec("python ../mass_email.py '".trim($_POST["body"])."'");
+		exec("python3 ../mass_email.py '".rawurlencode(trim($_POST["body"]))."'");
 	} else {
 	if(empty(trim($_POST["target"]))){
 		$person_err = "You have to enter in a name, ".$_SESSION["lusername"];

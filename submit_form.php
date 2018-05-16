@@ -84,8 +84,8 @@ mysqli_close($link);
 		<div class="selectbox">
 			<select name="report_type">
 				<option value="kill">I got somebody, heck yeah</option>
-				<option value="killed">I got got, dang it</option>
-				<option value="dispute">Somebody tried to get me and might submit a report but they're wrong lol</option>
+				<option value="killed">Somebody got me, dang it</option>
+				<option value="dispute">Submit a dispute</option>
 			</select>
 		</div>
 		</div>

@@ -22,6 +22,7 @@ results = cursor.fetchall()
 
 kill = []
 killed = []
+disputes = []
 verified_kills = []
 
 
@@ -34,39 +35,42 @@ for i in results:
         elif i[2] == "killed":
             killed.append((i[0], i[1]))
         else:
-            conflict = True
+            conflict = True;
+            disputes.append((i[0],i[1]));
             msg += i[0]+" has reported a dispute against "+i[1]+". Comments:\n"+i[3]+"\nFurther investigation is suggested.\n\n"
 
 
 # go through kill list and verify if the opposite report has been filed in the killed list 
 # add to verified list and delete reports if so; if not, check if the report is over a day old and notify the admins if so.
+for i in killed:
+    verified_kills.append(i)
+    cursor.execute("delete from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'killed';")
+    if (i[1], i[0]) in kill:
+        cursor.execute("delete from reports where filed_by = '"+i[1]+"' and against = '"+i[0]+"' and type = 'kill';")
+        kill.remove((i[1], i[0]))
+
 for i in kill:
-    if (i[1], i[0]) in killed:
-        verified_kills.append(i)
-        cursor.execute("delete from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'kill';")
-        cursor.execute("delete from reports where filed_by = '"+i[1]+"' and against = '"+i[0]+"' and type = 'killed';")
-    else:
-        cursor.execute("select * from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'kill' and time < date_sub(now(), interval 3 hour);")
-        results = cursor.fetchall()
-        if results:
-            conflict = True
-            for i in results:
-                msg += i[0]+" claims they have killed "+i[1]+", but no corroborating report has been filed. Comments:\n"+i[3]+"\n\n"
-msg+="Please check the admin panel for more information"
+    cursor.execute("select * from reports where filed_by = '"+i[0]+"' and against = '"+i[1]+"' and type = 'kill' and time < date_sub(now(), interval 3 hour);")
+    results = cursor.fetchall()
+    if results:
+        for j in results:
+            if (j[1], j[0]) not in disputes:
+                verified_kills.append((j[1], j[0]))
+                cursor.execute("delete from reports where filed_by = '"+j[0]+"' and against = '"+j[1]+"' and type = 'kill';")
 
 
 # For everybody in verified list, check if the killer actually had the victim as their target, and if so, give the killer the victim's target;
-# If not, (e.g., a self defense kill) make the killer the target of the person who was killed
+# If not, (e.g., a self defense kill) make the killer the target of whoever had the victim
 for i in verified_kills:
-    cursor.execute("select * from users where username  = '"+i[0]+"' and target = '"+i[1]+"';")
+    cursor.execute("select * from users where username  = '"+i[1]+"' and target = '"+i[0]+"';")
     results = cursor.fetchall()
     if results:
-        cursor.execute('select target from users where username = "'+i[1]+'";')
+        cursor.execute("select target from users where username = '"+i[0]+"';")
         new_target = cursor.fetchall() 
-        cursor.execute('UPDATE users SET target ="'+new_target[0][0]+'" where username = "'+i[0]+'";')
+        cursor.execute("UPDATE users SET target ='"+new_target[0][0]+"' where username = '"+i[1]+"';")
     else:
-        cursor.execute('update users set target = "'+i[0]+'" where target = "'+i[1]+'";')
-    cursor.execute('UPDATE users SET target = "killed" where username = "'+i[1]+'";')
+        cursor.execute("update users set target = '"+i[1]+"' where target = '"+i[0]+"';")
+    cursor.execute("UPDATE users SET target = 'killed' where username = '"+i[0]+"';")
 
 
 # Create gmail connection and send mail 

@@ -205,6 +205,11 @@ p a:hover {
     .button:hover {
         width:150%;
     }
+    .information_box p {
+    	font-size:20px;
+    	line-height:28px;
+        padding-top:15px;
+    }
 }
 
 @font-face {

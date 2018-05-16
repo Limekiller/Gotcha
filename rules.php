@@ -54,7 +54,9 @@ SIGN UP BEFORE APRIL 4 AT NOON
 <p>You can throw a rolled up sock at the target. It must be a solid hit to count; hitting just a person's hair does not count as a solid hit. 
 
 (When trying to avoid sock, please be careful. But also keep in mind that if you are clearly attacked, you can use self-defense. Sometimes running is the best strategy.)</p>
-<h4> If you have any sorts of questions about the rules, please contact the director. You should know proper conduct. Play fair, no cheating. If you botch a kill, don't lie about it. (If there is any disagreement, and there better not be, The director is the arbiter and their decision is final). Don't inconvenience the target or others with your antics. Don't hurt yourself. This is a fun sneaky game.</h4>
+<h2>Submitting a Report</h2>
+<p>When an encounter happens, choose "Submit a Report" from the main menu to report it. You may report getting somebody, being got by somebody, or a dispute if somebody attempted to get you and you believe they may allege that their attack was successful. Reports are checked automatically every hour, and the director is notified for disputes and attack reports that are not matched by both parties. Once an attack has been verified, you will automatically be given a new target; check back on the website every hour for the next target!</p>
+<h4> If you have any sorts of questions about the rules, please contact the director (raeannm@goshen.edu). You should know proper conduct. Play fair, no cheating. If you botch a kill, don't lie about it. (If there is any disagreement, and there better not be, The director is the arbiter and their decision is final). Don't inconvenience the target or others with your antics. Don't hurt yourself. This is a fun sneaky game.</h4>
 </div>
 </div>
 <div class="footer">

@@ -9,14 +9,14 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	$sql = "SELECT target, admin FROM users WHERE username = '".$_SESSION['lusername']."'";
 	$result = $link->query($sql);
 	$row = mysqli_fetch_array($result);
-	$sql2 = "SELECT email FROM users WHERE username = '".$row['target']."'";
+	$sql2 = "SELECT username, email FROM users WHERE username = '".$row['target']."'";
 	$result2 = $link->query($sql2);
 	$row2 = mysqli_fetch_array($result2);
 	if ($row["target"] == Null){
 		$info_box = Null;
 	} elseif ($row["target"] == "killed"){
 		$info_box = "killed";
-	} else { $info_box = $row2["email"]; }
+	} else { $info_box = $row2['username']." (".$row2["email"].")"; }
 	if ($row["admin"] == 1){
 		$admin = 'inherit';
 	} else {$admin = 'none';}
@@ -24,7 +24,7 @@ if(!empty($_SESSION['lusername']) && !($_SESSION['lusername'] == '')){
 	$result = $link->query($sql);
 	$row = mysqli_fetch_array($result);
 	if ($result->num_rows == 1){
-		$winner = $row['username'];
+		$winner = $row['username'].' ('.$row['email'].')';
 		$info_box = "win";
 	}
 	$sql = "show tables like 'game_running'";
@@ -111,7 +111,7 @@ if (isset($_GET['user'])){
 		</p></div>
             <h1 style='z-index:2;margin-top:25vh;position:relative;margin-left:-20px;font-family:Franklin Gothic Bold;'>Gotcha!</h1>
             <p style='z-index:2;position:relative;'>
-The goal of Gotcha is to remain in the game until all other players have gotten out or you have been gotten out. To do so, you will be assigned a target. If you succeed in getting your target out, you both must submit a report (choose "Submit a Report" from the main menu), and you will then receive your next target. If there is a disagreement, or if someone tried and failed to get you out -- but you believe they may submit a report claiming they got you -- disputes can be submitted as well.</p>
+The goal of Gotcha is to remain in the game until all other players have gotten out or you have been gotten out. To do so, you will be assigned a target. If you succeed in getting your target out, you both must submit a report (choose "Submit a Report" from the main menu), and you will then receive your next target. If there is a disagreement, or if someone tried and failed to get you out -- but you believe they may submit a report claiming they got you -- disputes can be submitted as well. You can find your target on this page once the game starts.</p>
         </div>
         <div class='buttons'>
             <a href='./admin.php' class='button' style='float:left;display:<?php echo $admin;?>;'>

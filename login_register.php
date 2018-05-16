@@ -52,6 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		mysqli_close($link);
 	}
 	elseif ($_POST['submit_btn'] == "Register"){ 
+                header("Location: /");
 		if(empty(trim($_POST["username"]))){
 			$username_err = "Boi what are you trying to do without entering a name?";
 		} else{
@@ -112,12 +113,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$param_email = $email;
 			$param_password = password_hash($password, PASSWORD_DEFAULT);
 			$param_description = $description;
-			error_log($param_username.$param_email.$param_password.$param_description);
 	
 			if($stmt->execute()){
 				$stmt->close();
 				$link->close();
-				error_log('got here fuck this shit ');
 				header('Location: /?user=true');
 			}
 			mysqli_stmt_close($stmt);
